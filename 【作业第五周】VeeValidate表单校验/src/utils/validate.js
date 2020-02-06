@@ -1,19 +1,10 @@
 import { extend } from 'vee-validate'
-import { required, email, length, min } from 'vee-validate/dist/rules'
+import * as rules from 'vee-validate/dist/rules'
+import { messages } from 'vee-validate/dist/locale/zh_CN'
 
-extend('required', {
-  ...required,
-  message: '{_field_}不能为空'
-})
-extend('email', {
-  ...email,
-  message: '请输入正确的邮箱格式'
-})
-extend('length', {
-  ...length,
-  message: '{_field_}要求长度为{length}'
-})
-extend('min', {
-  ...min,
-  message: '{_field_}最小长度为{length}'
-})
+for (let rule in rules) {
+  extend(rule, {
+    ...rules[rule],
+    message: messages[rule]
+  })
+}
